@@ -19,12 +19,12 @@ int main() {
     auto start = chrono::high_resolution_clock::now();
 
     int numLines;
-    string *lines = readInput("./inputs/day2.txt", &numLines); 
+    string *lines = readInput("./inputs/DONE/day2.txt", &numLines); 
 
     int sum = 0;
     for (int i = 0; i < numLines; i++) {
-        // sum += checkGame(lines[i]);
-        sum += gameProduct(lines[i]);
+        sum += checkGame(lines[i]);
+        //sum += gameProduct(lines[i]);
     }
     cout << "SUM - " << sum << endl;
 

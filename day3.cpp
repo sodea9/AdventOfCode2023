@@ -25,19 +25,19 @@ int main() {
     auto start = chrono::high_resolution_clock::now();
  
     int rows, cols;
-    char *schematic = readInput("./inputs/day3.txt", &rows, &cols);
+    char *schematic = readInput("./inputs/DONE/day3.txt", &rows, &cols);
     int sum = 0;
     for (int i = 0; i < rows; i++) {
         for (int j = 0; j < cols; j++) {
             char item = schematic[i*cols+j];
-            // if (isdigit(item)) {
-            //     sum += checkAdjacent(schematic, i, j, rows, cols);
-            //     while (isdigit(schematic[i*cols+j])) j++;
-            // }
-            if (item == '*') {
-                cout << gearRatio(schematic, i, j, rows, cols) << " ";
-                sum += gearRatio(schematic, i, j, rows, cols);
+            if (isdigit(item)) {
+                sum += checkAdjacent(schematic, i, j, rows, cols);
+                while (isdigit(schematic[i*cols+j])) j++;
             }
+            //if (item == '*') {
+            //    //cout << gearRatio(schematic, i, j, rows, cols) << " ";
+            //    sum += gearRatio(schematic, i, j, rows, cols);
+            //}
         }
     }
 

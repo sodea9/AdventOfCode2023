@@ -22,7 +22,7 @@ int main() {
     auto start = chrono::high_resolution_clock::now();
 
     int numLines;
-    string *lines = readInput("./inputs/day1.txt", &numLines); 
+    string *lines = readInput("./inputs/DONE/day1.txt", &numLines); 
 
     int sum = 0;
     int calVal;

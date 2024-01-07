@@ -29,11 +29,11 @@ int main() {
     string *lines = readInput("./inputs/DONE/day4.txt", &numLines); 
 
     int sum = 0;
-    //for (int i = 0; i < numLines; i++) {
-    //    sum += cardPoints(lines[i]);
-    //    cout << cardPoints(lines[i]) << " ";
-    //}
-    sum += totalCards(lines, numLines);
+    for (int i = 0; i < numLines; i++) {
+        sum += cardPoints(lines[i]);
+        //cout << cardPoints(lines[i]) << " ";
+    }
+    //sum += totalCards(lines, numLines);
     cout << "SUM - " << sum << endl;
     
     delete[] lines;
