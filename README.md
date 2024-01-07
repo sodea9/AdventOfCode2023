@@ -4,7 +4,7 @@ Solutions to AoC puzzles in C++
 
 ### Completion Status and Runtime:
 
-| Day | Part 1      | Part 2         |
+| Day | Part One    | Part Two       |
 |----:|-------------|----------------|
 |   1 | DONE - 1 ms | DONE - 6 ms    |
 |   2 | DONE - 1 ms | DONE - < 1 ms  |
