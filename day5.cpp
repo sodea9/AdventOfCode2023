@@ -11,35 +11,36 @@
 #include <chrono>
 
 using namespace std;
+typedef vector<tuple<int64_t,int64_t,int64_t>> PlantMap;
 
 string *readInput(string path, int *total);
 vector<int64_t> *getSeeds(string seedStr);
-vector<tuple<int64_t,int64_t,int64_t>> *linesToMap(string *linesStart);
-int64_t seedsToMinLocation(vector<int64_t> *seeds, vector<tuple<int64_t,int64_t,int64_t>> *_1, vector<tuple<int64_t,int64_t,int64_t>> *_2, vector<tuple<int64_t,int64_t,int64_t>> *_3, vector<tuple<int64_t,int64_t,int64_t>> *_4, vector<tuple<int64_t,int64_t,int64_t>> *_5, vector<tuple<int64_t,int64_t,int64_t>> *_6, vector<tuple<int64_t,int64_t,int64_t>> *_7);
-int64_t seedToLocation(int64_t seed, vector<tuple<int64_t,int64_t,int64_t>> *_1, vector<tuple<int64_t,int64_t,int64_t>> *_2, vector<tuple<int64_t,int64_t,int64_t>> *_3, vector<tuple<int64_t,int64_t,int64_t>> *_4, vector<tuple<int64_t,int64_t,int64_t>> *_5, vector<tuple<int64_t,int64_t,int64_t>> *_6, vector<tuple<int64_t,int64_t,int64_t>> *_7);
-int64_t sourceToDest(int64_t source, vector<tuple<int64_t,int64_t,int64_t>> *map);
+PlantMap *linesToMap(string *linesStart);
+int64_t seedsToMinLocation(vector<int64_t> *seeds, PlantMap *_1, PlantMap *_2, PlantMap *_3, PlantMap *_4, PlantMap *_5, PlantMap *_6, PlantMap *_7);
+int64_t seedToLocation(int64_t seed, PlantMap *_1, PlantMap *_2, PlantMap *_3, PlantMap *_4, PlantMap *_5, PlantMap *_6, PlantMap *_7);
+int64_t sourceToDest(int64_t source, PlantMap *map);
 
 int main() {
     auto start = chrono::high_resolution_clock::now();
 
     int totalLines;
-    string *lines = readInput("./inputs/day5a.txt", &totalLines);
+    string *lines = readInput("./inputs/day5.txt", &totalLines);
     vector<int64_t> *seeds = getSeeds(lines[0]);
     
     int i = 3;
-    vector<tuple<int64_t,int64_t,int64_t>> *sts = linesToMap(&lines[i]);
+    PlantMap *sts = linesToMap(&lines[i]);
     while (lines[i][0] != 's') i++;
-    vector<tuple<int64_t,int64_t,int64_t>> *stf = linesToMap(&lines[++i]);
+    PlantMap *stf = linesToMap(&lines[++i]);
     while (lines[i][0] != 'f') i++;
-    vector<tuple<int64_t,int64_t,int64_t>> *ftw = linesToMap(&lines[++i]);
+    PlantMap *ftw = linesToMap(&lines[++i]);
     while (lines[i][0] != 'w') i++;
-    vector<tuple<int64_t,int64_t,int64_t>> *wtl = linesToMap(&lines[++i]);
+    PlantMap *wtl = linesToMap(&lines[++i]);
     while (lines[i][0] != 'l') i++;
-    vector<tuple<int64_t,int64_t,int64_t>> *ltt = linesToMap(&lines[++i]);
+    PlantMap *ltt = linesToMap(&lines[++i]);
     while (lines[i][0] != 't') i++;
-    vector<tuple<int64_t,int64_t,int64_t>> *tth = linesToMap(&lines[++i]);
+    PlantMap *tth = linesToMap(&lines[++i]);
     while (lines[i][0] != 'h') i++;
-    vector<tuple<int64_t,int64_t,int64_t>> *htl = linesToMap(&lines[++i]);
+    PlantMap *htl = linesToMap(&lines[++i]);
 
     int64_t closest = seedsToMinLocation(seeds, sts, stf, ftw, wtl, ltt, tth, htl);
     cout << "Min Location - " << closest << endl;
@@ -100,9 +101,9 @@ vector<int64_t> *getSeeds(string seedStr) {
 /// @brief converts strings containing values and ranges into a map
 /// @param lines pointer to first string containing numbers of given section in the input
 /// @return pointer to a map containing source and destination pairs
-vector<tuple<int64_t,int64_t,int64_t>> *linesToMap(string *firstLine) {
+PlantMap *linesToMap(string *firstLine) {
     int64_t i = 0;
-    vector<tuple<int64_t,int64_t,int64_t>> *_map = new vector<tuple<int64_t,int64_t,int64_t>>();
+    PlantMap *_map = new PlantMap();
     while (!(firstLine[i].empty())) {
         const char delim[] = " ";
         int64_t destStart = atoll(strtok(&firstLine[i][0], delim));
@@ -114,7 +115,7 @@ vector<tuple<int64_t,int64_t,int64_t>> *linesToMap(string *firstLine) {
     return _map;
 }
 
-int64_t seedsToMinLocation(vector<int64_t> *seeds, vector<tuple<int64_t,int64_t,int64_t>> *_1, vector<tuple<int64_t,int64_t,int64_t>> *_2, vector<tuple<int64_t,int64_t,int64_t>> *_3, vector<tuple<int64_t,int64_t,int64_t>> *_4, vector<tuple<int64_t,int64_t,int64_t>> *_5, vector<tuple<int64_t,int64_t,int64_t>> *_6, vector<tuple<int64_t,int64_t,int64_t>> *_7) {
+int64_t seedsToMinLocation(vector<int64_t> *seeds, PlantMap *_1, PlantMap *_2, PlantMap *_3, PlantMap *_4, PlantMap *_5, PlantMap *_6, PlantMap *_7) {
     int64_t minLocation = LONG_LONG_MAX;
     for (int64_t s : *seeds) {
         int64_t loc = seedToLocation(s, _1, _2, _3, _4, _5, _6, _7);
@@ -123,7 +124,7 @@ int64_t seedsToMinLocation(vector<int64_t> *seeds, vector<tuple<int64_t,int64_t,
     return minLocation;
 }
 
-int64_t seedToLocation(int64_t seed, vector<tuple<int64_t,int64_t,int64_t>> *_1, vector<tuple<int64_t,int64_t,int64_t>> *_2, vector<tuple<int64_t,int64_t,int64_t>> *_3, vector<tuple<int64_t,int64_t,int64_t>> *_4, vector<tuple<int64_t,int64_t,int64_t>> *_5, vector<tuple<int64_t,int64_t,int64_t>> *_6, vector<tuple<int64_t,int64_t,int64_t>> *_7) {
+int64_t seedToLocation(int64_t seed, PlantMap *_1, PlantMap *_2, PlantMap *_3, PlantMap *_4, PlantMap *_5, PlantMap *_6, PlantMap *_7) {
     int64_t loc = seed;         
     loc = sourceToDest(loc, _1);
     loc = sourceToDest(loc, _2);
@@ -135,7 +136,7 @@ int64_t seedToLocation(int64_t seed, vector<tuple<int64_t,int64_t,int64_t>> *_1,
     return loc;
 }
 
-int64_t sourceToDest(int64_t source, vector<tuple<int64_t,int64_t,int64_t>> *map) {
+int64_t sourceToDest(int64_t source, PlantMap *map) {
     for (auto x : *map) {
         int64_t sourceStart, destStart, range;
         tie(sourceStart, destStart, range) = x;
